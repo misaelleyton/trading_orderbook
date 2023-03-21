@@ -12,8 +12,8 @@ app.get("/", (req, res) => {
     res.send("Market API is up and running");
 });
 
-app.get("/orderbook/:pair", marketController.getOrderbook);
-app.get("/price/:pair/:operation/:amount/:limit?", marketController.getPrice);
+app.get("/api/orderbook/:pair", marketController.getOrderbook);
+app.get("/api/price/:pair/:operation/:amount/:limit?", marketController.getPrice);
 
 // Start server
 app.listen(port, () => {

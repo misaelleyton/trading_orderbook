@@ -36,13 +36,16 @@ export default class WebsocketService {
 
             if (this.BOOK.mcnt === 0) {
                 _.each(msg[1], ((pp: { [index: string]: any }) => {
-                    pp = { price: pp[0], cnt: pp[1], amount: pp[2] }
-                    const side = pp.amount >= 0 ? 'bids' : 'asks'
-                    pp.amount = Math.abs(pp.amount)
-                    this.BOOK[side][pp.price] = pp
+                    if (!isNaN(pp[2])) {
+                        pp = { price: pp[0], cnt: pp[1], amount: pp[2] }
+                        const side = pp.amount >= 0 ? 'bids' : 'asks'
+                        pp.amount = Math.abs(pp.amount)
+                        this.BOOK[side][pp.price] = pp
+                    }
                 }).bind(this));
             } else {
                 msg = msg[1]
+                if (isNaN(msg[2])) return;
                 let pp = { price: msg[0], cnt: msg[1], amount: msg[2] }
 
                 if (!pp.cnt) {
